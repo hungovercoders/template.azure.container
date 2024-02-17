@@ -2,7 +2,7 @@ terraform {
 
 
   backend "azurerm" {
-    key = "template.azure.terraform.tfstate"
+    key = "template.azure.container.tfstate"
   }
 
   required_providers {

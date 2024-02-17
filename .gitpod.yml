@@ -31,3 +31,5 @@ vscode:
     - github.vscode-github-actions
     - gitpod.gitpod-desktop
     - redhat.vscode-yaml
+    - ms-azuretools.vscode-docker
+    - ms-dotnettools.csdevkit
