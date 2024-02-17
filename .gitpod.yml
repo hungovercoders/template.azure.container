@@ -21,6 +21,9 @@ tasks:
     command: |
       gp sync-await waitonnstate
       sh ./tools_platform/infrastructure.sh
+  - name: Container Build
+    command: |
+      sh ./tools_app/docker_build_push.sh True
 
 vscode:
   extensions:
