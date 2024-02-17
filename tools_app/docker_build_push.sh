@@ -7,7 +7,7 @@ cd api
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 IMAGENAME=dotnet-api
 VERSION=$(git log -1 --format="%h-%B" | sed 's/ /-/g')
-if [ $BRANCH = "main" ]; then
+if [ $BRANCH = "main" && "$GITHUB_ACTIONS" = "true" ]; then
     VERSION=latest
 fi
 IMAGE=$ORGANISATION/$IMAGENAME:$VERSION
