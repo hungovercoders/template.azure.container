@@ -19,6 +19,8 @@ export TF_VAR_region=$ARM_REGION
 export TF_VAR_team=$TEAM
 export TF_VAR_domain=$DOMAIN
 export TF_BACKEND_CONTAINER=$ENVIRONMENT
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+export TF_VAR_branch=$BRANCH
 TF_BACKEND_RESOURCE_GROUP="state-rg-$UNIQUE_NAMESPACE"
 TF_BACKEND_STORAGE_ACCOUNT="statesa$UNIQUE_NAMESPACE"
 
@@ -29,6 +31,7 @@ echo "Region is $TF_VAR_region"
 echo "Environment is $TF_VAR_environment" 
 echo "Team is $TF_VAR_team" 
 echo "Domain is $TF_VAR_domain" 
+echo "Branch is $TF_VAR_branch" 
 echo "State Storage Account Resource Group is $TF_BACKEND_RESOURCE_GROUP" 
 echo "State Storage Account is $TF_BACKEND_STORAGE_ACCOUNT" 
 echo "State Storage Account Container is $TF_BACKEND_CONTAINER"
