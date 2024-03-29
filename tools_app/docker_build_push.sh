@@ -8,7 +8,7 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 IMAGENAME=dotnet-api
 ##VERSION=$(git log -1 --format="%h-%B" | sed 's/ /-/g') //this is how can use get commit versions - but I don't need this, too granular
 VERSION=$ENVIRONMENT
-if [ $BRANCH = "main" && "$GITHUB_ACTIONS" = "true" ]; then
+if [ $BRANCH = "main" ]; then
     VERSION=latest
 fi
 IMAGE=$ORGANISATION/$IMAGENAME:$VERSION
