@@ -23,7 +23,26 @@ tasks:
       sh ./tools_platform/infrastructure.sh
   - name: Container Build
     command: |
-      sh ./tools_app/docker_build_push.sh True
+      sh ./tools_app/docker_build.sh
+      gp sync-done containerbuild
+  - name: Container Run
+    command: |
+      gp sync-await containerbuild
+      sh ./tools_app/docker_run.sh False
+      gp sync-done containerrun
+  - name: Container Test
+    command: |
+      gp sync-await containerrun
+      sh ./tests/test.sh
+      gp sync-done containertest
+  - name: Container Push
+    command: |
+      gp sync-await containertest
+      sh ./tests/test.sh
+  - name: Open App
+    command: |
+      gp sync-await containertest
+      gp preview $(gp url 5240)/weatherforecast
 
 vscode:
   extensions:

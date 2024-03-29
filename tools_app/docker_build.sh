@@ -1,8 +1,5 @@
 set -e  # Exit immediately if a command exits with a non-zero status.
 
-push=${1:-False}
-echo "Push: $push"
-
 cd api
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 IMAGENAME=dotnet-api
@@ -15,12 +12,3 @@ IMAGE=$ORGANISATION/$IMAGENAME:$VERSION
 echo "Building $IMAGE..."
 docker build -t $IMAGE .
 echo "Built $IMAGE."
-
-if [ $push = True ]; then
-    echo "Logging in to Docker..."
-    docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD ##--password-stdin - how to use?
-    echo "Logged in to Docker."
-    echo "Pushing $IMAGE..."
-    docker push $IMAGE
-    echo "Pushed $IMAGE."
-fi
