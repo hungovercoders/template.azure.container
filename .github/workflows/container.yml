@@ -49,7 +49,7 @@ jobs:
 
         - name: Docker Test
           run: |
-            sh ./test/test_simple.sh
+            sh ./test/test.sh
 
         - name: Docker Push
           run: |
