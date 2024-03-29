@@ -6,16 +6,21 @@ echo "Push: $push"
 cd api
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 IMAGENAME=dotnet-api
-VERSION=$(git log -1 --format="%h-%B" | sed 's/ /-/g')
+##VERSION=$(git log -1 --format="%h-%B" | sed 's/ /-/g') //this is how can use get commit versions - but I don't need this, too granular
+VERSION=$ENVIRONMENT
 if [ $BRANCH = "main" && "$GITHUB_ACTIONS" = "true" ]; then
     VERSION=latest
 fi
 IMAGE=$ORGANISATION/$IMAGENAME:$VERSION
-echo "Building $IMAGE"
+echo "Building $IMAGE..."
 docker build -t $IMAGE .
+echo "Built $IMAGE."
 
 if [ $push = True ]; then
-    docker login --username $DOCKER_USERNAME --password-stdin $DOCKER_PASSWORD
-    echo "Pushing $IMAGE"
+    echo "Logging in to Docker..."
+    docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD ##--password-stdin - how to use?
+    echo "Logged in to Docker."
+    echo "Pushing $IMAGE..."
     docker push $IMAGE
+    echo "Pushed $IMAGE."
 fi

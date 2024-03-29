@@ -46,6 +46,13 @@ variable "unique_namespace" {
   description = "The is the unique namespace added to resources."
 }
 
+variable "branch" {
+  type        = string
+  default     = false
+  description = "What branch this is deployin from."
+}
+
+
 locals {
   region_shortcode                          = (var.region == "northeurope" ? "eun" : var.region == "westeurope" ? "euw" : "unk")
   environment_shortcode                     = (var.environment == "learning" ? "lrn" : var.environment == "development" ? "dev" : var.environment == "production" ? "prd" : "unk")
@@ -53,6 +60,7 @@ locals {
   container_app_name                        = "${local.environment_shortcode}-${var.domain}-ca-${local.region_shortcode}-${var.unique_namespace}"
   container_environment_name                = "${local.environment_shortcode}-platform-ace-${local.region_shortcode}-${var.unique_namespace}"
   container_environment_resource_group_name = "${local.environment_shortcode}-platform-rg-${var.unique_namespace}"
+  container_image_tag                       = (var.branch == "main" ? "latest" : var.environment == "production-plan" ? "latest" : var.environment)
 
   tags = {
     environment  = var.environment

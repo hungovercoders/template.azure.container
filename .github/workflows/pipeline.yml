@@ -26,8 +26,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  development-container:
+    uses: ./.github/workflows/container.yml
+    with:
+      ORGANISATION: ${{ vars.ORGANISATION }}
+      ENVIRONMENT: "development"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
   development-infrastructure:
     uses: ./.github/workflows/infrastructure.yml
+    needs: development-container
     with:
       UNIQUE_NAMESPACE: ${{ vars.UNIQUE_NAMESPACE }}
       ORGANISATION: ${{ vars.ORGANISATION }}
@@ -54,10 +64,21 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
+  production-container:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/container.yml
+    needs: development-infrastructure
+    with:
+      ORGANISATION: ${{ vars.ORGANISATION }}
+      ENVIRONMENT: "production"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
   production-infrastructure:
     if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/infrastructure.yml
-    needs: development-infrastructure
+    needs: production-container
     with:
       UNIQUE_NAMESPACE: ${{ vars.UNIQUE_NAMESPACE }}
       ORGANISATION: ${{ vars.ORGANISATION }}

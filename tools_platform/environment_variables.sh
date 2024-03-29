@@ -11,3 +11,5 @@ echo "Region is $ARM_REGION"
 echo "Environment is $ENVIRONMENT" 
 echo "Team is $TEAM" 
 echo "Domain is $DOMAIN" 
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "Git branch is $BRANCH"

@@ -1,5 +1,7 @@
 set -e  # Exit immediately if a command exits with a non-zero status.
 
 echo "MESSAGE: Docker variables are..."
-echo "Username is $DOCKER_USERNAME" 
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "Git branch is $BRANCH"
 echo "Organisation is $ORGANISATION" 
+echo "Environment is $ENVIRONMENT" 

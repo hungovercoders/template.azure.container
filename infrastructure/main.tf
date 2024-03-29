@@ -18,7 +18,7 @@ resource "azurerm_container_app" "app" {
   template {
     container {
       name   = "examplecontainerapp2"
-      image  = "docker.io/hungovercoders/dotnet-api:latest"
+      image  = "docker.io/hungovercoders/dotnet-api:${local.container_image_tag}"
       cpu    = 0.25
       memory = "0.5Gi"
     }
