@@ -43,6 +43,10 @@ jobs:
           run: |
             sh ./tools_app/docker_run_stop.sh True
 
+        - name: Install curl
+          run: |
+            sudo apt-get update && sudo apt-get install -y curl
+
         - name: Docker Test
           run: |
             sh ./test/test_simple.sh
