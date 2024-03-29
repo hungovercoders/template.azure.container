@@ -35,13 +35,13 @@ jobs:
           run: |
             sh ./tools_platform/environment_variables.sh
     
-        - name: Docker Build & Push
+        - name: Docker Build
           run: |
-            sh ./tools_app/docker_build_push.sh True
+            sh ./tools_app/docker_build.sh
 
         - name: Docker Run
           run: |
-            sh ./tools_app/docker_run_stop.sh True
+            sh ./tools_app/docker_run.sh
 
         - name: Install curl
           run: |
@@ -50,6 +50,10 @@ jobs:
         - name: Docker Test
           run: |
             sh ./test/test_simple.sh
+
+        - name: Docker Push
+          run: |
+            sh ./tools_app/docker_push.sh
         
 
 
