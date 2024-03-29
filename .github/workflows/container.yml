@@ -39,5 +39,14 @@ jobs:
           run: |
             sh ./tools_app/docker_build_push.sh True
 
+        - name: Docker Run
+          run: |
+            sh ./tools_app/docker_run_stop.sh True
+
+        - name: Docker Test
+          run: |
+            sh ./test/test_simple.sh
+        
+
 
   
