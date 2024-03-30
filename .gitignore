@@ -315,3 +315,6 @@ MigrationBackup/
 
 # Fody
 FodyWeavers.xml
+
+# Mono
+.mono/*

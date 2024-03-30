@@ -2,8 +2,8 @@
 
 echo "Starting script: $0..."
 
-echo "Starting tests..."
-sh ../test/simple_test.sh
+sh ./test/simple_test.sh
+
 echo "Completed script: $0."
 
 

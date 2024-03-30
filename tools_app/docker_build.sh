@@ -33,10 +33,15 @@ echo "Version is $VERSION."
 IMAGENAME=$ORGANISATION/$APP:$VERSION
 echo "Image name is $IMAGENAME."
 
+echo "Changing to application directory to interact with docker file..."
 cd api
+echo "Changed to application directory to interact with docker file."
 echo "Building $IMAGENAME..."
 docker build -t $IMAGENAME .
 echo "Built $IMAGENAME."
+echo "Changing to back to root directory..."
+cd ..
+echo "Changed to back to root directory."
 
 
 if [ "$(docker inspect -f '{{.State.Running}}' "$CONTAINERNAME" 2>/dev/null)" = "true" ]; then
@@ -48,14 +53,14 @@ else
 fi
 
 if [ $RUN = True ]; then
-    sh ../tools_app/docker_containers_clear.sh
+    sh ./tools_app/docker_containers_clear.sh
     echo "Run container $CONTAINERNAME from image $IMAGENAME..."
     docker run -d -p 5240:5240 --name $CONTAINERNAME $IMAGENAME
     echo "Running container $CONTAINERNAME from image $IMAGENAME."
-    sh ../test/tests.sh
+    sh ./test/tests.sh
 fi
 
-sh ../tools_app/docker_list.sh
+sh ./tools_app/docker_list.sh
 
 if [ $PUSH = True ]; then
     echo "Logging in to Docker..."
