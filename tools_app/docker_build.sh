@@ -38,9 +38,14 @@ echo "Building $IMAGENAME..."
 docker build -t $IMAGENAME .
 echo "Built $IMAGENAME."
 
-echo "Stopping docker container $CONTAINERNAME..."
-docker stop $CONTAINERNAME
-echo "Stopping docker container $CONTAINERNAME..."
+
+if [ "$(docker inspect -f '{{.State.Running}}' "$CONTAINERNAME" 2>/dev/null)" = "true" ]; then
+    echo "Stopping container: $CONTAINERNAME"
+    docker stop $CONTAINERNAME
+    echo "Container stopped successfully."
+else
+    echo "Container $CONTAINERNAME is not currently running."
+fi
 
 if [ $RUN = True ]; then
     sh ../tools_app/docker_containers_clear.sh
