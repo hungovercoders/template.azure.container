@@ -31,29 +31,17 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
 
+        - name: Install curl
+          run: |
+            sudo apt-get update && sudo apt-get install -y curl
+
         - name: 'Show Variables'
           run: |
             sh ./tools_platform/environment_variables.sh
     
         - name: Docker Build
           run: |
-            sh ./tools_app/docker_build.sh
-
-        - name: Docker Run
-          run: |
-            sh ./tools_app/docker_run.sh
-
-        - name: Install curl
-          run: |
-            sudo apt-get update && sudo apt-get install -y curl
-
-        - name: Docker Test
-          run: |
-            sh ./test/test.sh
-
-        - name: Docker Push
-          run: |
-            sh ./tools_app/docker_push.sh
+            sh ./tools_app/docker_build.sh dotnet-api True True
         
 
 
