@@ -1,9 +1,13 @@
 set -e  # Exit immediately if a command exits with a non-zero status.
-APP=${1:-dotnet-api}
-RUN=${2:-False}
-PUSH=${3:-False}
+
+RUN=${1:-False}
+PUSH=${2:-False}
 
 echo "Starting script: $0..."
+
+set -a
+. ./domain.env
+set +a
 
 if [ $RUN = True ]; then
     echo "You have chosen to run the image as a container once built."
@@ -24,11 +28,7 @@ echo "App name is $APP."
 CONTAINERNAME=$APP
 echo "Container name is $CONTAINERNAME."
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-##VERSION=$(git log -1 --format="%h-%B" | sed 's/ /-/g') //this is how can use get commit versions - but I don't need this, too granular
-VERSION=$ENVIRONMENT
-if [ "$BRANCH" = "main" ] && [ "$GITHUB_ACTIONS" = true ]; then
-    VERSION=latest
-fi
+VERSION=$BRANCH-$(git log -1 --format="%h-%B" | sed 's/ /-/g')
 echo "Version is $VERSION."
 IMAGENAME=$ORGANISATION/$APP:$VERSION
 echo "Image name is $IMAGENAME."

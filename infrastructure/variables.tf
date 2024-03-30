@@ -46,10 +46,14 @@ variable "unique_namespace" {
   description = "The is the unique namespace added to resources."
 }
 
-variable "branch" {
+variable "app" {
   type        = string
-  default     = false
-  description = "What branch this is deployin from."
+  description = "What is the name of the app."
+}
+
+variable "image_tag" {
+  type        = string
+  description = "What image tag should be used for the container app image."
 }
 
 
@@ -60,7 +64,8 @@ locals {
   container_app_name                        = "${local.environment_shortcode}-${var.domain}-ca-${local.region_shortcode}-${var.unique_namespace}"
   container_environment_name                = "${local.environment_shortcode}-platform-ace-${local.region_shortcode}-${var.unique_namespace}"
   container_environment_resource_group_name = "${local.environment_shortcode}-platform-rg-${var.unique_namespace}"
-  container_image_tag                       = (var.branch == "main" ? "latest" : var.environment == "production-plan" ? "latest" : var.environment)
+  container_name                            = var.app
+  container_image_name                      = "docker.io/${var.organisation}/${var.app}:${var.image_tag}"
 
   tags = {
     environment  = var.environment
