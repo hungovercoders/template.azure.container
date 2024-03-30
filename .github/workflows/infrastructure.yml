@@ -27,7 +27,7 @@ on:
 
 jobs:
 
-    infrastructure:
+    terraform:
         name: 'Infrastructure'
         runs-on: ubuntu-latest
         environment:  ${{ inputs.ENVIRONMENT }}
