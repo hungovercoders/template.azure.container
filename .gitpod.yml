@@ -25,6 +25,10 @@ tasks:
     command: |
       sh ./tools_app/docker_build.sh True False
       gp sync-done containerbuild
+  - name: Open App
+    command: |
+      gp sync-await containerbuild
+      gp preview $(gp url 5240)/weatherforecast
 
 vscode:
   extensions:
