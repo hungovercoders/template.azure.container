@@ -52,7 +52,7 @@ else
     echo "Container $CONTAINERNAME is not currently running."
 fi
 
-if [ $RUN = True ]; then
+if [ "$RUN" = "True" ] || [ "$PUSH" = "True" ]; then
     sh ./tools_app/docker_containers_clear.sh
     echo "Run container $CONTAINERNAME from image $IMAGENAME..."
     docker run -d -p $PORT:$PORT --name $CONTAINERNAME $IMAGENAME

@@ -1,5 +1,3 @@
-# set -e  # Exit immediately if a command exits with a non-zero status.
-
 echo "Starting script: $0..."
 
 set -a
@@ -21,12 +19,12 @@ while [ $counter -le $retries ]; do
     echo "Requesting response..."
     response=$(curl -s -o /dev/null -w "%{http_code}" $URL)
     if [ "$response" -eq 200 ]; then
-        echo "Success: HTTP status code is 200"
+        echo "\e[32mSuccess: HTTP status code is 200\e[0m"
         exit 0
     elif [ "$response" -eq 000 ]; then
-        echo "Pending: HTTP status code is 000"
+        echo "\e[33mPending: HTTP status code is 000\e[0m"
     else
-        echo "Error: HTTP status code is $response"
+        echo -e "\e[31mError: HTTP status code is $response\e[0m"
         exit 1
     fi
 
@@ -34,10 +32,5 @@ while [ $counter -le $retries ]; do
     echo "Waiting $wait second to ensure container is up before trying again..."
     counter=$(expr $counter + 1)
     done
-echo "Timed out after $retries retries over a period of $timeout seconds."
+echo "\e[31mTimed out after $retries retries over a period of $timeout seconds.\e[0m"
 exit 1
-
-
-
-
-
