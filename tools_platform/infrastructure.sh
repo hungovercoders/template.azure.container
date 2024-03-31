@@ -20,10 +20,15 @@ export TF_VAR_team=$TEAM
 export TF_VAR_domain=$DOMAIN
 export TF_BACKEND_CONTAINER=$ENVIRONMENT
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-COMMIT=$BRANCH-$(git log -1 --format="%h-%B" | sed 's/ /-/g')
+if [ -n "$(git status --porcelain)" ]; then
+    IMAGE_TAG="$BRANCH-development"
+else
+    COMMIT_ID=$(git log -1 --format="%h")
+    IMAGE_TAG="$BRANCH-$COMMIT_ID"
+fi
 export TF_VAR_app=$APP
 export TF_VAR_branch=$BRANCH
-export TF_VAR_image_tag=$COMMIT
+export TF_VAR_image_tag=$IMAGE_TAG
 export TF_VAR_port=$PORT
 TF_BACKEND_RESOURCE_GROUP="state-rg-$UNIQUE_NAMESPACE"
 TF_BACKEND_STORAGE_ACCOUNT="statesa$UNIQUE_NAMESPACE"

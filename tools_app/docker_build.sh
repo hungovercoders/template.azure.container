@@ -28,9 +28,17 @@ echo "App name is $APP."
 CONTAINERNAME=$APP
 echo "Container name is $CONTAINERNAME."
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-VERSION=$BRANCH-$(git log -1 --format="%h-%B" | sed 's/ /-/g')
-echo "Version is $VERSION."
-IMAGENAME=$ORGANISATION/$APP:$VERSION
+echo "Branch is $BRANCH."
+if [ -n "$(git status --porcelain)" ]; then
+    echo "Uncommitted changes so image tag is..."
+    IMAGE_TAG="$BRANCH-development"
+else
+    echo "All changes committed so image tag is..."
+    COMMIT_ID=$(git log -1 --format="%h")
+    IMAGE_TAG="$BRANCH-$COMMIT_ID"
+fi
+echo "$IMAGE_TAG."
+IMAGENAME=$ORGANISATION/$APP:$IMAGE_TAG
 echo "Image name is $IMAGENAME."
 
 echo "Changing to application directory to interact with docker file..."
