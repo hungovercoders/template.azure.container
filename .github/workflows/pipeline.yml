@@ -26,7 +26,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  development-application:
+  application:
     uses: ./.github/workflows/application.yml
     with:
       ORGANISATION: ${{ vars.ORGANISATION }}
@@ -37,7 +37,7 @@ jobs:
 
   development-infrastructure:
     uses: ./.github/workflows/infrastructure.yml
-    needs: development-application
+    needs: application
     with:
       UNIQUE_NAMESPACE: ${{ vars.UNIQUE_NAMESPACE }}
       ORGANISATION: ${{ vars.ORGANISATION }}
