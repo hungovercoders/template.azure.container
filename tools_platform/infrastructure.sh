@@ -18,6 +18,7 @@ export TF_VAR_organisation=$ORGANISATION
 export TF_VAR_region=$ARM_REGION
 export TF_VAR_team=$TEAM
 export TF_VAR_domain=$DOMAIN
+export TF_VAR_app=$APP
 export TF_BACKEND_CONTAINER=$ENVIRONMENT
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ -n "$(git status --porcelain)" ]; then
@@ -26,8 +27,7 @@ else
     COMMIT_ID=$(git log -1 --format="%h")
     IMAGE_TAG="$BRANCH-$COMMIT_ID"
 fi
-export TF_VAR_app=$APP
-export TF_VAR_branch=$BRANCH
+
 export TF_VAR_image_tag=$IMAGE_TAG
 export TF_VAR_port=$PORT
 TF_BACKEND_RESOURCE_GROUP="state-rg-$UNIQUE_NAMESPACE"
@@ -40,7 +40,7 @@ echo "Region is $TF_VAR_region"
 echo "Environment is $TF_VAR_environment" 
 echo "Team is $TF_VAR_team" 
 echo "Domain is $TF_VAR_domain" 
-echo "Branch is $TF_VAR_branch" 
+echo "Image tag is $TF_VAR_image_tag" 
 echo "State Storage Account Resource Group is $TF_BACKEND_RESOURCE_GROUP" 
 echo "State Storage Account is $TF_BACKEND_STORAGE_ACCOUNT" 
 echo "State Storage Account Container is $TF_BACKEND_CONTAINER"
