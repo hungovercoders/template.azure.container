@@ -1,10 +1,17 @@
 # set -e  # Exit immediately if a command exits with a non-zero status.
 
 echo "Starting script: $0..."
+
+set -a
+. ./domain.env
+set +a
+
+URL=${1:-http://localhost:$PORT/health}
+echo "Url to be smoke tested is $URL..."
+
 retries=5
 wait=1
 timeout=$(($wait*5))
-
 
 echo "Test configured with time between retries of $wait second with a maximum of $retries retries resulting in a timeout of $timeout seconds."
 
@@ -12,7 +19,7 @@ counter=1
 while [ $counter -le $retries ]; do
     echo "Attempt $counter..."
     echo "Requesting response..."
-    response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5240/weatherforecast)
+    response=$(curl -s -o /dev/null -w "%{http_code}" $URL)
     if [ "$response" -eq 200 ]; then
         echo "Success: HTTP status code is 200"
         exit 0

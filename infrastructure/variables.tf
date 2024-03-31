@@ -56,6 +56,11 @@ variable "image_tag" {
   description = "What image tag should be used for the container app image."
 }
 
+variable "port" {
+  type        = string
+  description = "What will be the exposed port for the container app."
+}
+
 
 locals {
   region_shortcode                          = (var.region == "northeurope" ? "eun" : var.region == "westeurope" ? "euw" : "unk")

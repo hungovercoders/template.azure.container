@@ -28,8 +28,8 @@ tasks:
   - name: Open App
     command: |
       gp sync-await containerbuild
-      gp preview $(gp url 5240)/weatherforecast
-
+      sh ./tools_app/preview.sh
+      
 vscode:
   extensions:
     - hashicorp.terraform

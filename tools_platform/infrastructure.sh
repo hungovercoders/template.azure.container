@@ -24,6 +24,7 @@ COMMIT=$BRANCH-$(git log -1 --format="%h-%B" | sed 's/ /-/g')
 export TF_VAR_app=$APP
 export TF_VAR_branch=$BRANCH
 export TF_VAR_image_tag=$COMMIT
+export TF_VAR_port=$PORT
 TF_BACKEND_RESOURCE_GROUP="state-rg-$UNIQUE_NAMESPACE"
 TF_BACKEND_STORAGE_ACCOUNT="statesa$UNIQUE_NAMESPACE"
 

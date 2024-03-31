@@ -55,7 +55,7 @@ fi
 if [ $RUN = True ]; then
     sh ./tools_app/docker_containers_clear.sh
     echo "Run container $CONTAINERNAME from image $IMAGENAME..."
-    docker run -d -p 5240:5240 --name $CONTAINERNAME $IMAGENAME
+    docker run -d -p $PORT:$PORT --name $CONTAINERNAME $IMAGENAME
     echo "Running container $CONTAINERNAME from image $IMAGENAME."
     sh ./test/tests.sh
 fi
